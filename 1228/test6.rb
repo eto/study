@@ -47,7 +47,7 @@ class FMODSound
 end
 
 class App
-  def main
+  def main(argv)
     system = FMODSystem.new
     sound = system.load_sound("pi.wav")
     p sound.length
@@ -59,4 +59,15 @@ class App
   end
 end
 
-App.new.main
+if ARGV[0] == "--test"
+  ARGV.shift
+  require "test/unit"
+  class TestIt < Test::Unit::TestCase
+    def test_it
+      assert_equal(2, 1+1)
+      it = FMODSound.new(nil)
+    end
+  end
+else
+  App.new.main(ARGV)
+end
