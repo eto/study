@@ -10,5 +10,5 @@ task :cp do
 end
 
 task :test do
-  sh "ruby test3.rb"
+  sh "ruby test4.rb"
 end
