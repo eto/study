@@ -36,12 +36,12 @@ class FMODSound
     @channel.volume = volume if volume
     @channel.pan = pan if pan
   end
-  private def midi_note_to_frequency(note)
+  def midi_note_to_frequency(note)
     note = 0   if note < 0
     note = 127 if 127 < note
     return 8.17579891564 * Math.exp(0.0577622650 * note)
   end
-  private def frequency_to_midi_note(freq)
+  def frequency_to_midi_note(freq)
     return 0 < freq ? 17.3123405046 * Math.log(0.12231220585 * freq) : -1500
   end
 end
@@ -66,6 +66,8 @@ if ARGV[0] == "--test"
     def test_it
       assert_equal(2, 1+1)
       it = FMODSound.new(nil)
+      assert_equal(2616, (it.midi_note_to_frequency(60)*10).to_i)
+      assert_equal(60,   (it.frequency_to_midi_note(261.6)).ceil)
     end
   end
 else
