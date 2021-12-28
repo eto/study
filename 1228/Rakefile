@@ -10,6 +10,5 @@ task :cp do
 end
 
 task :test do
-  #sh "ruby test2.rb pi.wav"
   sh "ruby test3.rb"
 end
