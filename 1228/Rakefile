@@ -4,5 +4,5 @@
 # License: BSD 3-Clause License
 
 task :default do
-  sh "ruby test1.rb"
+  sh "ruby test2.rb pi.wav"
 end
