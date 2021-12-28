@@ -10,6 +10,8 @@ class FMODSystem
     FMOD.load_library
     @system = FMOD::System.create
   end
+  def get_version
+  end
 
   def load_sound(file)
     sound = @system.create_sound("pi.wav")
@@ -21,21 +23,27 @@ end
 class FMODSound
   def initialize(sound)
     @sound = sound
-    @channel = nil
-    @freq = nil
+    @base_note = 60	# 元の音を60として扱う。
+    @channel = @note = @volume = @pan = nil
   end
-  attr_reader :freq
-
-  def play(freq = nil)
-    @channel = @sound.play
-    @freq = @channel.frequency	# default: 44100.0
-    if freq
-      @freq = freq
-      @channel.frequency = @freq
-    end
-  end
-
+  attr_reader :note
   def length; @sound.length; end
+  def play(note = 60, volume = nil, pan = nil)	# MIDI note(0-127, center:60), volume(0-100), pan (left:-100 to right:100)
+    @channel = @sound.play
+    org_freq = @channel.frequency
+    sfreq = midi_note_to_frequency(note) * org_freq / midi_note_to_frequency(@base_note)
+    @channel.frequency = sfreq
+    @channel.volume = volume if volume
+    @channel.pan = pan if pan
+  end
+  private def midi_note_to_frequency(note)
+    note = 0   if note < 0
+    note = 127 if 127 < note
+    return 8.17579891564 * Math.exp(0.0577622650 * note)
+  end
+  private def frequency_to_midi_note(freq)
+    return 0 < freq ? 17.3123405046 * Math.log(0.12231220585 * freq) : -1500
+  end
 end
 
 class App
@@ -43,11 +51,9 @@ class App
     system = FMODSystem.new
     sound = system.load_sound("pi.wav")
     p sound.length
-    base = 44100.0
-    (1..30).each {|i|
-      sound.play(base / i)
-      p sound.freq
-      sleep 0.04 * Math.sqrt(i.to_f)
+    (60..90).each {|i|
+      sound.play(i)
+      sleep 0.04
     }
     sleep 2
   end
