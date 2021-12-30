@@ -3,6 +3,8 @@
 # Copyright (C) 2004-2021 Koichiro Eto, All rights reserved.
 # License: BSD 3-Clause License
 
+require "cutep"
+
 given = "6459"
 chars = given.split(//)
 nums = []
@@ -11,28 +13,36 @@ chars.each {|char|
 }
 
 operators = %w{+ - * /}
-
-expressions = []
-loop {
-  formula = []
-  formula << nums[0]
+operatorslist = []
+op = []
+operators.each {|operator|
+  op << operator
   operators.each {|operator|
-    formula << operator
-    formula << nums[1]
+    op << operator
     operators.each {|operator|
-      formula << operator
-      formula << nums[2]
-      operators.each {|operator|
-        formula << operator
-        formula << nums[3]
-      }
+      op << operator
     }
   }
-  formulastr = formula.join("")
-  result = eval formulastr
-  expressions[formulastr] = result
-  if result == 10
-    p formulastr
-  end
+  operatorslist = op
+}
+
+#expressions = {}
+expressions = []
+loop {
+  operatorslist.each {|operator|
+    formula << nums[0]
+    formula << op[0]
+    formula << nums[1]
+    formula << op[1]
+    formula << nums[2]
+    formula << op[2]
+    formula << nums[3]
+    formulastr = formula.join("")
+    result = eval formulastr
+    expressions << [formulastr, result]
+    p formulastr, result
+    if result == 10
+      p formulastr
+    end
   }
 }
