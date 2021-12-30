@@ -13,36 +13,36 @@ chars.each {|char|
 }
 
 operators = %w{+ - * /}
+#qp operators
 operatorslist = []
-op = []
 operators.each {|operator|
-  op << operator
+  op = []
+  op[0] = operator
   operators.each {|operator|
-    op << operator
+    op[1] = operator
     operators.each {|operator|
-      op << operator
+      op[2] = operator
+      operatorslist << op.dup
     }
   }
-  operatorslist = op
 }
 
 #expressions = {}
 expressions = []
-loop {
-  operatorslist.each {|operator|
-    formula << nums[0]
-    formula << op[0]
-    formula << nums[1]
-    formula << op[1]
-    formula << nums[2]
-    formula << op[2]
-    formula << nums[3]
-    formulastr = formula.join("")
-    result = eval formulastr
-    expressions << [formulastr, result]
-    p formulastr, result
-    if result == 10
-      p formulastr
-    end
-  }
+operatorslist.each {|op|
+  formula = []
+  formula << nums[0].to_s+".0"
+  formula << op[0]
+  formula << nums[1].to_s+".0"
+  formula << op[1]
+  formula << nums[2].to_s+".0"
+  formula << op[2]
+  formula << nums[3].to_s+".0"
+  formulastr = formula.join("")
+  result = eval formulastr
+  expressions << [formulastr, result]
+  #qp formulastr, result
+  if result == 10
+    p [formulastr, result]
+  end
 }
