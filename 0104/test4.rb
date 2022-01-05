@@ -12,10 +12,10 @@ mp_drawing_styles = mp.solutions.drawing_styles
 mp_face_mesh = mp.solutions.face_mesh
 
 # For webcam input:
-drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
-p drawing_spec
-cap = cv2.VideoCapture(1)
-p cap
+drawing_spec = mp_drawing.DrawingSpec.(thickness=1, circle_radius=1)
+#p drawing_spec
+#cap = cv2.VideoCapture(1)
+#p cap
 cap = cv2.VideoCapture.(1)
 p cap
 exit
