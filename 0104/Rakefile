@@ -3,8 +3,9 @@
 
 task :default => :test
 task :install do
-  sh "pip2 install mediapipe"
+  sh "pip3 install mediapipe"
 end
 task :test do
-  sh "python3 -m venv mp_env && source mp_env/bin/activate"
+#  sh "python3 -m venv mp_env && source mp_env/bin/activate"
+  sh "python3 test1.py"
 end
