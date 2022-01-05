@@ -1,0 +1,85 @@
+=======================================================2022-01-05(Wed)
+----------------------------------------------------------------------
+ruby test4.rb
+<class 'mediapipe.python.solutions.drawing_utils.DrawingSpec'>
+<class 'cv2.VideoCapture'>
+2022-01-05 05:38:08.742 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALPlugInMain version=1.3.1
+2022-01-05 05:38:08.742 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_QueryInterface 
+2022-01-05 05:38:08.742 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_Release sRefCount now = 0
+2022-01-05 05:38:08.742 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_InitializeWithObjectID self=0x11235c758
+2022-01-05 05:38:08.742 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1684629094
+2022-01-05 05:38:08.742 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.742 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1869180523
+2022-01-05 05:38:08.743 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.743 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1885762592
+2022-01-05 05:38:08.743 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1818850926
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1869180523
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1937009955
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1886156132
+2022-01-05 05:38:08.797 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALDevice(33) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1935833461
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.798 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.799 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_ObjectSetPropertyData OBSDALStream(34) kCMIOObjectPropertyListenerAdded self=0x11235c758 data(int)=1885762592
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled setPropertyDataWithAddress for kCMIOObjectPropertyListenerAdded
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for Unknown selector: nefc
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for Unknown selector: nefc
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.800 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for Unknown selector: nefc
+2022-01-05 05:38:08.801 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALStream unhandled hasPropertyWithAddress for Unknown selector: cafc
+2022-01-05 05:38:08.801 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIODevicePropertySuspendedByUser
+2022-01-05 05:38:08.801 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+2022-01-05 05:38:08.801 ruby[66946:341737] obs-mac-virtualcam(DAL): OBSDALDevice unhandled hasPropertyWithAddress for kCMIOObjectPropertyOwnedObjects
+<VideoCapture 0x1121c5bb0>
+2022-01-05 05:38:09.936 ruby[66946:341737] obs-mac-virtualcam(DAL): HardwarePlugIn_Teardown self=0x11235c758
+
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+----------------------------------------------------------------------
