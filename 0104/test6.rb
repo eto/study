@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 # coding: utf-8
+# Copyright (C) 2022 Koichiro Eto, All rights reserved.
+# License: BSD 3-Clause License
 
 require 'qp'
-
 require 'pycall/import'
 include PyCall::Import
 
 class Test4
-  def main
+  def main(argv)
     pyimport 'cv2', as: 'cv2'
     pyimport 'mediapipe', as: 'mp'
 
@@ -84,7 +85,20 @@ class Test4
   end
 end
 
-Test4.new.main
+def main
+  if ARGV[0] == "--test"
+    ARGV.shift
+    require "test/unit"
+    class TestIt < Test::Unit::TestCase
+      def test_it
+        assert_equal(2, 1+1)
+        #it = Studies.new
+      end
+    end
+  else
+    Test4.new.main(ARGV)
+  end
+end
 
 =begin
   while cap.isOpened():
