@@ -9,7 +9,7 @@ require "autoreload"
 
 $LOAD_PATH << "."
 autoreload(:interval=>1, :verbose=>true, :reprime=>true) do
-  require "test6"
+  require "test7"
 end
 
 if ARGV[0] == "--test"
