@@ -7,5 +7,5 @@ task :install do
 end
 task :test do
   #sh "python3 -m venv mp_env && source mp_env/bin/activate"
-  sh "python3 test2.py"
+  sh "python3 test3.py"
 end
