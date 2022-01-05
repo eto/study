@@ -1,0 +1,39 @@
+Ruby/Python is a Ruby extension library to use Python modules
+from Ruby scripts.
+
+* Installation
+
+Requirements:
+
+  - ruby-1.3.x
+  - python-1.5.x
+
+Compile:
+
+  ruby extconf.rb [options]
+  make
+  make install
+
+You can specify options when you run 'ruby extconf.rb':
+
+`--with-python-prefix=PREFIX'
+    Prefix where Python is installed.  Default is '/usr/local'.
+
+* Usage
+
+See the documentation under directory "doc".  Directory "examples"
+contains some example scripts.
+
+* Author
+
+Masaki Fukushima <fukusima@goto.info.waseda.ac.jp>
+
+Ruby/Pyhon is copyrighted free software by Masaki Fukushima.
+
+You can redistribute it and/or modify it under the terms of
+the GPL (GNU GENERAL PUBLIC LICENSE).  See COPYING file about GPL.
+
+THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  See the GPL for
+more details.
