@@ -24,17 +24,12 @@ class MediaPipeTest
 
     # For webcam input:
     drawing_spec = @mp_drawing.DrawingSpec.(thickness=1, circle_radius=1)
-    #qp drawing_spec
-    #cap = cv2.VideoCapture(1)
-    #p cap
     @cap = cv2.VideoCapture.(0)
-    #qp cap
 
     @face_mesh = @mp_face_mesh.FaceMesh.({max_num_faces: 1,
                                         refine_landmarks: true,
                                         min_detection_confidence: 0.5,
                                         min_tracking_confidence: 0.5})
-    #qp face_mesh
 
     loop {
       mainloop
@@ -45,15 +40,12 @@ class MediaPipeTest
 
   def mainloop
       status = @cap.isOpened()
-      #qp status
       unless status
         @running = false
         return
       end
 
       success, image = @cap.read()
-      #p success, image
-      #qp success
       unless success
         print("Ignoring empty camera frame.")
         @running = false
@@ -62,13 +54,8 @@ class MediaPipeTest
 
       # To improve performance, optionally mark the image as not writeable to pass by reference.
       image.flags.writeable = false
-      #qp image.flags.writeable
-      #qp image, cv2.COLOR_BGR2RGB
-      #qp cv2.COLOR_BGR2RGB
       image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-      #qp cv2.COLOR_BGR2RGB
       results = @face_mesh.process(image)
-      #qp results
 
       # Draw the face mesh annotations on the image.
       image.flags.writeable = true
