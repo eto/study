@@ -3,8 +3,8 @@
 
 task :default => :test
 task :install do
-  sh "pip3 install tensorflow"
+  sh "pip2 install mediapipe"
 end
 task :test do
-  sh "ruby tf.rb"
+  sh "python3 -m venv mp_env && source mp_env/bin/activate"
 end

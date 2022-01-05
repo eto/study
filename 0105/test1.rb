@@ -1,6 +1,6 @@
-#!/usr/bin/env ruby -w
+#!/usr/bin/env ruby
 # coding: utf-8
 
 require 'pycall'
 math = PyCall.import_module("math")
-math.sin(math.pi / 4) - Math.sin(Math::PI / 4)   # => 0.0
+p math.sin(math.pi / 4) - Math.sin(Math::PI / 4)   # => 0.0
