@@ -8,6 +8,9 @@ require 'pycall/import'
 include PyCall::Import
 
 class MediaPipeTest
+  def initialize
+    @running = true
+  end
   def main(argv)
     pyimport 'cv2', as: 'cv2'
     pyimport 'mediapipe', as: 'mp'
@@ -18,39 +21,51 @@ class MediaPipeTest
 
     # For webcam input:
     drawing_spec = mp_drawing.DrawingSpec.(thickness=1, circle_radius=1)
-    qp drawing_spec
+    #qp drawing_spec
     #cap = cv2.VideoCapture(1)
     #p cap
     cap = cv2.VideoCapture.(0)
-    qp cap
+    #qp cap
 
     face_mesh = mp_face_mesh.FaceMesh.({max_num_faces: 1,
                                         refine_landmarks: true,
                                         min_detection_confidence: 0.5,
                                         min_tracking_confidence: 0.5})
-    qp face_mesh
+    #qp face_mesh
 
     loop {
+      mainloop
+      break unless @running
+    }
+    cap.release()
+  end
+
+  def mainloop
       status = cap.isOpened()
-      qp status
-      break unless status
+      #qp status
+      unless status
+        @running = false
+        return
+      end
+
       success, image = cap.read()
       #p success, image
-      qp success
+      #qp success
       unless success
         print("Ignoring empty camera frame.")
-        break
+        @running = false
+        return
       end
 
       # To improve performance, optionally mark the image as not writeable to pass by reference.
       image.flags.writeable = false
-      qp image.flags.writeable
+      #qp image.flags.writeable
       #qp image, cv2.COLOR_BGR2RGB
-      qp cv2.COLOR_BGR2RGB
+      #qp cv2.COLOR_BGR2RGB
       image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-      qp cv2.COLOR_BGR2RGB
+      #qp cv2.COLOR_BGR2RGB
       results = face_mesh.process(image)
-      qp results
+      #qp results
 
       # Draw the face mesh annotations on the image.
       image.flags.writeable = true
@@ -78,10 +93,9 @@ class MediaPipeTest
       # Flip the image horizontally for a selfie-view display.
       cv2.imshow('MediaPipe Face Mesh', cv2.flip(image, 1))
       if cv2.waitKey(5) & 0xFF == 27
-        break
+        @running = false
+        return
       end
-    }
-    cap.release()
   end
 end
 
