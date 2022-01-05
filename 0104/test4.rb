@@ -26,10 +26,12 @@ face_mesh = mp_face_mesh.FaceMesh.({max_num_faces: 1,
 p face_mesh
 
 loop {
-  status = cap.isOpened.()
+  status = cap.isOpened()
   p status
   break unless status
-  success, image = cap.read.()
+  success, image = cap.read()
+  #p success, image
+  p success
   unless success
     print("Ignoring empty camera frame.")
     break
