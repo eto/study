@@ -1,0 +1,12 @@
+GEM
+  specs:
+    pycall (1.4.1)
+
+PLATFORMS
+  x86_64-darwin-21
+
+DEPENDENCIES
+  pycall
+
+BUNDLED WITH
+   2.2.32

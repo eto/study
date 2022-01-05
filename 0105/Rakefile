@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby -w
+# coding: utf-8
+
+task :default => :test
+task :test do
+  sh "ruby test1.rb"
+end
