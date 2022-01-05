@@ -7,6 +7,6 @@ task :install do
 end
 task :test do
   #sh "python3 -m venv mp_env && source mp_env/bin/activate"
-  #sh "python3 test3.py"
-  sh "python3 test4.rb"
+  #sh "python3 test5.py"
+  sh "ruby test4.rb"
 end
