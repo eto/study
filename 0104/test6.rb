@@ -7,7 +7,7 @@ require 'qp'
 require 'pycall/import'
 include PyCall::Import
 
-class Test4
+class MediaPipeTest
   def main(argv)
     pyimport 'cv2', as: 'cv2'
     pyimport 'mediapipe', as: 'mp'
@@ -82,21 +82,6 @@ class Test4
       end
     }
     cap.release()
-  end
-end
-
-def main
-  if ARGV[0] == "--test"
-    ARGV.shift
-    require "test/unit"
-    class TestIt < Test::Unit::TestCase
-      def test_it
-        assert_equal(2, 1+1)
-        #it = Studies.new
-      end
-    end
-  else
-    Test4.new.main(ARGV)
   end
 end
 
