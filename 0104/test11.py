@@ -4,14 +4,6 @@
 # $ pip3 install numpy opencv-python mediapipe
 # $ pip3 install pyyaml
 
-①必要なモジュールをimportする
-②画像データを読み込む
-③パラメータを定義し、読み込む
-④Mediapipeを用いて顔認識を行う
-⑤パーツを抽出し、マスクを作成する
-⑥抽出したパーツに対して色と重みをつける
-⑦融合する
-
 # ①必要なモジュールをimportする
 import cv2
 import yaml
@@ -30,10 +22,9 @@ plt.imshow(img)
 
 # ③パラメータを定義し、読み込む
 def read_yaml(path):
-　　"""yamlファイルを読み込むための関数
-
-　　入力：yamlファイルのパス
-　　出力：dict形式のデータ
+    """yamlファイルを読み込むための関数
+    入力：yamlファイルのパス
+    出力：dict形式のデータ
     """
     with open(path, "r") as f:
         cfg = yaml.safe_load(f)
@@ -114,7 +105,7 @@ if results.multi_face_landmarks:
         mask_r_eyebrow = []
         for i in range(face_mesh.FACEMESH_NUM_LANDMARKS):
 
-　　　　　　 # 唇
+             # 唇
             if i in lips:
                 pt1 = face_landmarks.landmark[i]
                 x = int(pt1.x * img.shape[1])
@@ -135,7 +126,7 @@ if results.multi_face_landmarks:
                 y = int(pt1.y * img.shape[0])
                 mask_r_eyes.append((x, y))
 
-            # 眉毛（左）　
+            # 眉毛（左）  
             elif i in l_eyebrow:
                 pt1 = face_landmarks.landmark[i]
                 x = int(pt1.x * img.shape[1])
@@ -174,11 +165,11 @@ full_mask = gray.copy()
 
 # パーツをループし処理を行う
 for idx, (part, v) in enumerate(face_dict.items()):
-　　# マスクをコピーし初期化する
+    # マスクをコピーし初期化する
     mask = gray.copy()
 
-　　# パーツの範囲を定義する
-　　convexhull = cv2.convexHull(v)
+    # パーツの範囲を定義する
+    convexhull = cv2.convexHull(v)
 
     # 色と重みを定義する
     if "eyes" in part:
@@ -200,10 +191,10 @@ for idx, (part, v) in enumerate(face_dict.items()):
     mask = cv2.fillConvexPoly(mask, convexhull, color)
     mask = cv2.GaussianBlur(mask, (7, 7), 20)
 
-　　# パーツのマスクを全体のマスクに追加していく
+    # パーツのマスクを全体のマスクに追加していく
     full_mask = cv2.addWeighted(full_mask, 1, mask, weight, 1)
 
-　　# 描画する
+    # 描画する
     axs[idx].set_title(part)
     axs[idx].imshow(mask)
 
