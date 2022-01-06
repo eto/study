@@ -4,6 +4,8 @@
 # License: BSD 3-Clause License
 
 require 'qp'
+require 'sgl'
+
 require 'pycall/import'
 include PyCall::Import
 

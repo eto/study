@@ -8,6 +8,7 @@ require "qp"
 require "autoreload"
 
 $LOAD_PATH << "."
+$LOAD_PATH << "../../sgl/lib"
 autoreload(:interval=>1, :verbose=>true, :reprime=>true) do
   require "test7"
 end
