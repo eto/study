@@ -12,6 +12,17 @@ import cv2
 import numpy as np
 import mediapipe as mp
 
+import pyvirtualcam
+
+# VirtualCameraクラス
+class VirtualCamera():
+    def __init__(self, width, height, fps) -> None:
+        self.v_cam = pyvirtualcam.Camera(width=width, height=height, fps=fps)
+
+    def _send(self, image):
+        self.v_cam.send(image)
+        self.v_cam.sleep_until_next_frame()
+
 # ③Configクラス
 class Config():
     def __init__(self, yaml_file) -> None:
@@ -155,49 +166,60 @@ class Detector():
         logger.warning("Face not detected.")
         return self.img, mask
 
-# ⑤画像取得クラス
-# カメルを稼働させ、yamlファイルと検知器を読み込む
-# src/face_filter.py
 class Camera():
-    def __init__(self, index, config, detector) -> None:
-        self.start(index)
+    # 画像サイズを同調させるため、予め横軸を定義する。
+    #def __init__(self, index, config, detector, width:int=1920, height:int=1080, fps:int=30) -> None:
+    def __init__(self, index, config, detector, width:int=1280, height:int=720, fps:int=30) -> None:
         self.config = config
         self.detector = detector
 
-# 指定したカメルを起動する
+        self.width = width
+        self.height = height
+        self.fps = fps
+
+        self.start(index)
+
     def start(self, index) -> None:
         self.cap = cv2.VideoCapture(index)
+        #self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        #self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
         success, frame = self.cap.read()
         if not success:
             logger.error(f"Camera not successful: video input: {index}")
             sys.exit()
         self.mask = np.zeros((frame.shape[0], frame.shape[1], 3), dtype=np.uint8)
 
+        #　仮想カメラを始動する。
+        self.v_cam = VirtualCamera(width=self.width, height=self.height, fps=self.fps)
+
     def capture(self) -> None:
         logger.info("Catpuring images from video input... (press 'q' to exit.)")
-        while True:
-            _, frame = self.cap.read()    
+        while True: 
+            success, frame = self.cap.read()
+            if not success:
+                print("Ignoring empty camera frame.")
+                # If loading a video, use 'break' instead of 'continue'.
+                continue
+
             frame.flags.writeable = False
-            # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-            # 顔検知 
+            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             self.detector(frame)
+
             frame.flags.writeable = True
-
-            # 後処理を行う。
             frame, mask = self.detector.post_processing(self.mask, self.config.yaml_cfg)
+            mask = cv2.flip(mask, 1)
 
-            # 分かりやすくするため、 左右反転を行う。
-            frame = cv2.flip(frame, 1)
+            # 結果を送信する。
+            self.v_cam._send(frame)
 
-            # 表示する。
-            cv2.imshow("demo", frame)
+            # マスクを表示する。
+            mask = cv2.resize(mask, dsize=(400, 320))
+            cv2.imshow("mask", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
+
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
-        self.cap.release()
-        cv2.destroyAllWindows()
-        logger.info("Process terminated.")
 
 # ⑥引数管理(argparse)
 def arg_parser() -> None:
