@@ -5,10 +5,12 @@
 
 require "pp"
 require "qp"
+require "ostruct"
 require "autoreload"
 
 require 'pycall/import'
 include PyCall::Import
+PyCall.sys.path.append(__dir__)
 
 $LOAD_PATH << "."
 $LOAD_PATH << "../../sgl/lib"
