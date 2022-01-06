@@ -1,13 +1,14 @@
+#!/usr/bin/env python
 
-# https://qiita.com/YomamaBanana/items/978689d6ec6c7e7be5d7
-# $ pip install numpy opencv-python mediapipe
+# from https://qiita.com/YomamaBanana/items/978689d6ec6c7e7be5d7
+# $ pip3 install numpy opencv-python mediapipe
+
 import cv2
 import numpy as np
 import mediapipe as mp
 import matplotlib.pyplot as plt
 
-# This image come from https://thispersondoesnotexist.com/
-img_path = "face.jpg"
+img_path = "face.jpg"	# This image come from https://thispersondoesnotexist.com/
 
 src = cv2.imread(img_path)
 src = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
