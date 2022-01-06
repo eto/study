@@ -8,6 +8,7 @@ task :default => :test
 
 task :install do
   sh "pip3 install mediapipe"
+  sh "pip3 install pyvirtualcam"
 end
 
 task :uninstallobs do
