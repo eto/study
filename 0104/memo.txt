@@ -1,10 +1,18 @@
 =======================================================2022-01-05(Wed)
 ----------------------------------------------------------------------
-ruby pycall 引数 シンボル
+■ruby pycall 引数 シンボル
 https://qiita.com/jnchito/items/74e0930c54df90f9704c
 https://qiita.com/stat/items/a383451e7f824e4c9627
+■ruby pycall None
+----------------------------------------------------------------------
+■MediaPipe draw_landmarks
+https://google.github.io/mediapipe/solutions/face_mesh.html
+https://arxiv.org/abs/1907.06724
+https://arxiv.org/pdf/1907.06724.pdf
 
-ruby pycall None
+% grep landmark t2|wc
+     478     957    5283
+
 
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------

@@ -89,8 +89,6 @@ class MediaPipeTest
                                 connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_contours_style()})
   end
   def draw_irises(image, face_landmarks)
-    #qp image
-
     #qp face_landmarks
     # landmark {
     #   x: 0.561671257019043
