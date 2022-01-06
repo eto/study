@@ -3,6 +3,9 @@
 # Copyright (C) 2022 Koichiro Eto, All rights reserved.
 # License: BSD 3-Clause License
 
+#pyimport 'facecamera'
+fc = PyCall.import_module('facecamera')
+
 class MediaPipeFace
   def initialize
     @running = true
@@ -11,6 +14,6 @@ class MediaPipeFace
   end
 
   def main(argv)
-    pyimport 'facecamera', as: 'fc'
+    #pyimport 'facecamera', as: 'fc'
   end
 end
