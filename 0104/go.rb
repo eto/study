@@ -7,11 +7,15 @@ require "pp"
 require "qp"
 require "autoreload"
 
+require 'pycall/import'
+include PyCall::Import
+
 $LOAD_PATH << "."
 $LOAD_PATH << "../../sgl/lib"
-autoreload(:interval=>1, :verbose=>true, :reprime=>true) do
+autoreload(:interval=>1, :verbose=>true, :reprime=>true) {
   require "test7"
-end
+}
+#qp "start"
 
 if ARGV[0] == "--test"
   ARGV.shift

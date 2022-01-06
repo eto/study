@@ -3,11 +3,7 @@
 # Copyright (C) 2022 Koichiro Eto, All rights reserved.
 # License: BSD 3-Clause License
 
-require 'qp'
-require 'sgl'
-
-require 'pycall/import'
-include PyCall::Import
+#require 'sgl'
 
 class MediaPipeTest
   def initialize
@@ -29,9 +25,9 @@ class MediaPipeTest
     @cap = cv2.VideoCapture.(0)
 
     @face_mesh = @mp_face_mesh.FaceMesh.({max_num_faces: 1,
-                                        refine_landmarks: true,
-                                        min_detection_confidence: 0.5,
-                                        min_tracking_confidence: 0.5})
+                                          refine_landmarks: true,
+                                          min_detection_confidence: 0.5,
+                                          min_tracking_confidence: 0.5})
 
     loop {
       mainloop
@@ -41,52 +37,64 @@ class MediaPipeTest
   end
 
   def mainloop
-      status = @cap.isOpened()
-      unless status
-        @running = false
-        return
-      end
+    unless @cap.isOpened()
+      @running = false
+      return
+    end
 
-      success, image = @cap.read()
-      unless success
-        print("Ignoring empty camera frame.")
-        @running = false
-        return
-      end
+    success, image = @cap.read()
+    unless success
+      print("Ignoring empty camera frame.")
+      #@running = false
+      return
+    end
 
-      # To improve performance, optionally mark the image as not writeable to pass by reference.
-      image.flags.writeable = false
-      image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-      results = @face_mesh.process(image)
+    # To improve performance, optionally mark the image as not writeable to pass by reference.
+    image.flags.writeable = false
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    results = @face_mesh.process(image)
 
-      # Draw the face mesh annotations on the image.
-      image.flags.writeable = true
-      image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-      if results.multi_face_landmarks
-        for face_landmarks in results.multi_face_landmarks
-          @mp_drawing.draw_landmarks({image: image,
-                                     landmark_list: face_landmarks,
-                                     connections: @mp_face_mesh.FACEMESH_TESSELATION,
-                                     landmark_drawing_spec: nil,
-                                     connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_tesselation_style()})
-          @mp_drawing.draw_landmarks({image: image,
-                                     landmark_list: face_landmarks,
-                                     connections: @mp_face_mesh.FACEMESH_CONTOURS,
-                                     landmark_drawing_spec: nil,
-                                     connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_contours_style()})
-          @mp_drawing.draw_landmarks({image: image,
-                                     landmark_list: face_landmarks,
-                                     connections: @mp_face_mesh.FACEMESH_IRISES,
-                                     landmark_drawing_spec: nil,
-                                     connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_iris_connections_style()})
-        end
-      end
+    image = draw_face(image, results)	# Draw the face mesh annotations on the image.
 
-      # Flip the image horizontally for a selfie-view display.
-      cv2.imshow('MediaPipe Face Mesh', cv2.flip(image, 1))
-      if cv2.waitKey(5) & 0xFF == 27
-        @running = false
-        return
+    # Flip the image horizontally for a selfie-view display.
+    cv2.imshow('MediaPipe Face Mesh', cv2.flip(image, 1))
+    if cv2.waitKey(5) & 0xFF == 27
+      @running = false
+      return
+    end
+  end
+
+  def draw_face(image, results)	# Draw the face mesh annotations on the image.
+    image.flags.writeable = true
+    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+    if results.multi_face_landmarks
+      for face_landmarks in results.multi_face_landmarks
+        draw_tesselation(image, face_landmarks)
+        draw_contour(image, face_landmarks)
+        draw_irises(image, face_landmarks)
       end
+    end
+    return image
+  end
+  def draw_tesselation(image, face_landmarks)
+    @mp_drawing.draw_landmarks({image: image,
+                                landmark_list: face_landmarks,
+                                connections: @mp_face_mesh.FACEMESH_TESSELATION,
+                                landmark_drawing_spec: nil,
+                                connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_tesselation_style()})
+  end
+  def draw_contour(image, face_landmarks)
+    @mp_drawing.draw_landmarks({image: image,
+                                landmark_list: face_landmarks,
+                                connections: @mp_face_mesh.FACEMESH_CONTOURS,
+                                landmark_drawing_spec: nil,
+                                connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_contours_style()})
+  end
+  def draw_irises(image, face_landmarks)
+    @mp_drawing.draw_landmarks({image: image,
+                                landmark_list: face_landmarks,
+                                connections: @mp_face_mesh.FACEMESH_IRISES,
+                                landmark_drawing_spec: nil,
+                                connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_iris_connections_style()})
   end
 end
