@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby -w
 # coding: utf-8
 
+require 'rake/clean'
+CLEAN.include 'take*.jpg'
+
 task :default => :test
 task :install do
   sh "pip3 install mediapipe"

@@ -15,10 +15,10 @@ import matplotlib.pyplot as plt
 img_path = "face.jpg"	# This image come from https://thispersondoesnotexist.com/
 
 src = cv2.imread(img_path)
-#cv2.imwrite("take0.jpg", src)
-src = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
+#src = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
 img = src.copy()
-plt.imshow(img)
+#plt.imshow(img)
+cv2.imwrite("take0.jpg", img)
 
 # ③パラメータを定義し、読み込む
 def read_yaml(path):
@@ -68,6 +68,7 @@ if results.multi_face_landmarks:
             connection_drawing_spec=drawing_styles.get_default_face_mesh_tesselation_style()
             )
 plt.imshow(img)
+cv2.imwrite("take1.jpg", img)
 
 # ⑤パーツを抽出し、マスクを作成する
 # マスクの初期化
@@ -206,5 +207,8 @@ result = cv2.addWeighted(full_mask, 1, src, 1, 1)
 fig, (ax0, ax1) = plt.subplots(1,2)
 ax0.set_title("Before")
 ax0.imshow(src)
+cv2.imwrite("take2.jpg", src)
+
 ax1.set_title("After")
 ax1.imshow(result)
+cv2.imwrite("take3.jpg", result)
