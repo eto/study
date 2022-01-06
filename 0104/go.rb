@@ -12,6 +12,8 @@ include PyCall::Import
 
 $LOAD_PATH << "."
 $LOAD_PATH << "../../sgl/lib"
+#require 'sgl'
+
 autoreload(:interval=>1, :verbose=>true, :reprime=>true) {
   require "test8"
 }

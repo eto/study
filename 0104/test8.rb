@@ -3,8 +3,6 @@
 # Copyright (C) 2022 Koichiro Eto, All rights reserved.
 # License: BSD 3-Clause License
 
-#require 'sgl'
-
 class MediaPipeTest
   def initialize
     @running = true
@@ -69,8 +67,8 @@ class MediaPipeTest
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
     if results.multi_face_landmarks
       for face_landmarks in results.multi_face_landmarks
-        draw_tesselation(image, face_landmarks)
-        draw_contour(image, face_landmarks)
+        #draw_tesselation(image, face_landmarks)
+        #draw_contour(image, face_landmarks)
         draw_irises(image, face_landmarks)
       end
     end
@@ -91,10 +89,33 @@ class MediaPipeTest
                                 connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_contours_style()})
   end
   def draw_irises(image, face_landmarks)
-    @mp_drawing.draw_landmarks({image: image,
-                                landmark_list: face_landmarks,
-                                connections: @mp_face_mesh.FACEMESH_IRISES,
-                                landmark_drawing_spec: nil,
-                                connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_iris_connections_style()})
+    #qp image
+
+    #qp face_landmarks
+    # landmark {
+    #   x: 0.561671257019043
+    #   y: 0.8560786247253418
+    #   z: 0.007543095853179693
+    # }
+
+    #pp @mp_face_mesh.FACEMESH_IRISES
+    # frozenset({(475, 476), (477, 474), (469, 470), (472, 469), (471, 472), (474, 475), (476, 477), (470, 471)})
+
+    #pp @mp_drawing_styles.get_default_face_mesh_iris_connections_style().to_h
+    # {(476, 477)=>DrawingSpec(color=(48, 255, 48), thickness=2, circle_radius=2),
+    #  (475, 476)=>DrawingSpec(color=(48, 255, 48), thickness=2, circle_radius=2),
+    #  (477, 474)=>DrawingSpec(color=(48, 255, 48), thickness=2, circle_radius=2),
+    #  (474, 475)=>DrawingSpec(color=(48, 255, 48), thickness=2, circle_radius=2),
+    #  (469, 470)=>DrawingSpec(color=(48, 48, 255), thickness=2, circle_radius=2),
+    #  (472, 469)=>DrawingSpec(color=(48, 48, 255), thickness=2, circle_radius=2),
+    #  (471, 472)=>DrawingSpec(color=(48, 48, 255), thickness=2, circle_radius=2),
+    #  (470, 471)=>DrawingSpec(color=(48, 48, 255), thickness=2, circle_radius=2)}
+
+    hash = {image: image,
+            landmark_list: face_landmarks,
+            connections: @mp_face_mesh.FACEMESH_IRISES,
+            landmark_drawing_spec: nil,
+            connection_drawing_spec: @mp_drawing_styles.get_default_face_mesh_iris_connections_style()}
+    @mp_drawing.draw_landmarks(hash)
   end
 end
