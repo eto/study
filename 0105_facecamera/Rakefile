@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby -w
+# coding: utf-8
+
+require 'rake/clean'
+CLEAN.include 'take*.jpg'
+
+task :default => :test
+
+task :install do
+  sh "pip3 install mediapipe"
+  sh "pip3 install pyvirtualcam"
+end
+
+task :uninstallobs do
+  sh "cd /Library/CoreMediaIO/Plug-Ins/DAL; sudo mv obs-mac-virtualcam.plugin .."
+end
+
+task :test do
+  #sh "python3 -m venv mp_env && source mp_env/bin/activate"
+  #sh "python3 test12.py"
+  #sh "python3 face_filter.py --video 0 config/make_up.yaml"
+  #sh "python3 face_camera.py --video 0 config/make_up.yaml"
+  #sh "python3 face_camera.py --video 1 config/make_up.yaml"
+  sh "ruby go.rb"
+end
