@@ -1,29 +1,7 @@
 #!/usr/bin/env python
 # from https://qiita.com/YomamaBanana/items/4197c4f9ec26a05416ed
 
-#class Config():
-# Config処理クラス
-
-#class Detector():
-# 検知器クラス
-
-#class Camera():
-# カメラクラス
-
-#def arg_parser():
-# 引数管理
-
-#def main():
-# メイン関数
-#------------------------------------------------------------
-#------------------------------------------------------------
-#------------------------------------------------------------
-#------------------------------------------------------------
-#------------------------------------------------------------
-#------------------------------------------------------------
-
 # ②モジュールをimportする
-# src/face_filter.py
 import yaml
 
 import sys
@@ -35,7 +13,6 @@ import numpy as np
 import mediapipe as mp
 
 # ③Configクラス
-# src/face_filter.py
 class Config():
     def __init__(self, yaml_file) -> None:
         logger.info(f"Reading config file: {yaml_file}")
@@ -179,7 +156,6 @@ class Detector():
         return self.img, mask
 
 # ⑤画像取得クラス
-
 # カメルを稼働させ、yamlファイルと検知器を読み込む
 # src/face_filter.py
 class Camera():
