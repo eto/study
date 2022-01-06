@@ -13,7 +13,7 @@ include PyCall::Import
 $LOAD_PATH << "."
 $LOAD_PATH << "../../sgl/lib"
 autoreload(:interval=>1, :verbose=>true, :reprime=>true) {
-  require "test7"
+  require "test8"
 }
 #qp "start"
 
