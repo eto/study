@@ -13,6 +13,8 @@ img_path = "face.jpg"	# This image come from https://thispersondoesnotexist.com/
 src = cv2.imread(img_path)
 src = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
 img = src.copy()
+cv2.imwrite("take1.jpg", img)
+#exit
 
 # ②Mediapipeを用いて顔認識を行う
 # 検知器のインスタンス化
@@ -32,6 +34,9 @@ drawing.draw_landmarks(
     landmark_list=face_landmarks[0],
     connections=face_mesh.FACEMESH_TESSELATION,
     connection_drawing_spec=drawing_styles.get_default_face_mesh_tesselation_style())
+
+cv2.imwrite("take2.jpg", img)
+exit
 
 # ③「唇マスク」を作成する
 # 入力画像と同じサイズの黒マスクを作成
@@ -61,3 +66,4 @@ mask = cv2.GaussianBlur(mask, (7, 7), 20)
 
 # ⑤入力画像と「唇マスク」の融合
 resulting_image = cv2.addWeighted(mask, 0.5, src, 1, 0.)
+#cv2.imwrite("result.png", resulting_image)
