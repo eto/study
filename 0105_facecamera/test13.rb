@@ -11,6 +11,6 @@ class MediaPipeFace
   end
 
   def main(argv)
-    pyimport 'face_camera', as: 'fc'
+    pyimport 'facecamera', as: 'fc'
   end
 end
