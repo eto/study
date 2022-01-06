@@ -11,10 +11,10 @@ import matplotlib.pyplot as plt
 img_path = "face.jpg"	# This image come from https://thispersondoesnotexist.com/
 
 src = cv2.imread(img_path)
+cv2.imwrite("take0.jpg", src)
 src = cv2.cvtColor(src, cv2.COLOR_BGR2RGB)
 img = src.copy()
 cv2.imwrite("take1.jpg", img)
-#exit
 
 # ②Mediapipeを用いて顔認識を行う
 # 検知器のインスタンス化
@@ -36,7 +36,6 @@ drawing.draw_landmarks(
     connection_drawing_spec=drawing_styles.get_default_face_mesh_tesselation_style())
 
 cv2.imwrite("take2.jpg", img)
-exit
 
 # ③「唇マスク」を作成する
 # 入力画像と同じサイズの黒マスクを作成
@@ -64,6 +63,10 @@ mask = cv2.fillConvexPoly(gray, convexhull, ((100, 30, 100)))
 # 見た目をより円滑化するため、ガウシアンブラーをかける
 mask = cv2.GaussianBlur(mask, (7, 7), 20)
 
+cv2.imwrite("take3.jpg", mask)
+
 # ⑤入力画像と「唇マスク」の融合
 resulting_image = cv2.addWeighted(mask, 0.5, src, 1, 0.)
-#cv2.imwrite("result.png", resulting_image)
+resulting_image = cv2.cvtColor(resulting_image, cv2.COLOR_BGR2RGB)
+cv2.imwrite("take4.jpg", resulting_image)
+
