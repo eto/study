@@ -18,8 +18,8 @@ class MediaPipeFace
     args = OpenStruct.new
     args.yaml_file = "config/make_up.yaml"
     args.video = 1
-    fc.main(args.yaml_file, args.video)
-    #fc_main(args.yaml_file, args.video)
+    #fc.main(args.yaml_file, args.video)
+    fc_main(args.yaml_file, args.video)
   end
 
   def fc_main(yaml_file, cam_idx)
