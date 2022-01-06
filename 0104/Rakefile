@@ -10,6 +10,6 @@ task :uninstallobs do
 end
 task :test do
   #sh "python3 -m venv mp_env && source mp_env/bin/activate"
-  #sh "python3 test5.py"
-  sh "ruby go.rb"
+  sh "python3 test10.py"
+  #sh "ruby go.rb"
 end
