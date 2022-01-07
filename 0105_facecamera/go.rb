@@ -18,7 +18,7 @@ $LOAD_PATH << "../../sgl/lib"
 #require 'sgl'
 
 autoreload(:interval=>1, :verbose=>true, :reprime=>true) {
-  require "test16"
+  require "test17"
 }
 #qp "start"
 
