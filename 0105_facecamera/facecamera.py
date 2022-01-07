@@ -194,14 +194,12 @@ class Camera():
         #　仮想カメラを始動する。
         self.v_cam = VirtualCamera(width=self.width, height=self.height, fps=self.fps)
 
-"""
     def capture(self) -> None:
         logger.info("Catpuring images from video input... (press 'q' to exit.)")
         while True:
             result = self.capture_oneframe()
             if not result:
                 break
-"""
 
     def capture_oneframe(self):
         success, frame = self.cap.read()
