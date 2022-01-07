@@ -202,7 +202,7 @@ class Camera():
             if not result:
                 break
 
-    def capture_oneframe(self):
+    def nu_capture_oneframe(self):
         success, frame = self.cap.read()
         if not success:
             print("Ignoring empty camera frame.")

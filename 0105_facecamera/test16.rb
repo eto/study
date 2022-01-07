@@ -7,13 +7,18 @@
 #PyCall.sys.path.append(__dir__)
 #fc = PyCall.import_module('facecamera')
 
+def int(n)
+  n.to_i
+end
+
 class MediaPipeFace
   def initialize
   end
 
   def main(argv)
-    pyimport 'facecamera', as: 'fc'
-    pyimport :cv2
+    pyimport "facecamera", as: :fc
+    pyimport "cv2"
+    pyimport "numpy", as: :np
 
     #args = fc.arg_parser()
     args = OpenStruct.new
@@ -51,7 +56,8 @@ class MediaPipeFace
     cam.detector.detect_faces(frame)
 
     frame.flags.writeable = true
-    frame, mask = cam.detector.post_processing(cam.mask, cam.config.yaml_cfg)
+    #frame, mask = cam.detector.post_processing(cam.mask, cam.config.yaml_cfg)
+    frame, mask = detector_post_processing(cam.detector, cam.mask, cam.config.yaml_cfg)
     mask = cv2.flip(mask, 1)
 
     cam.v_cam._send(frame)	# 結果を送信する。
@@ -63,5 +69,102 @@ class MediaPipeFace
     key &= 0xFF
     return false if key == 113 || key == 27
     return true
+  end
+
+  def detector_post_processing(s, mask, cfg)
+    face_dict = {}
+    if s.results.multi_face_landmarks
+      for face_landmarks in s.results.multi_face_landmarks
+        mask_lip = []
+        mask_face = []
+        mask_l_eyes = []
+        mask_r_eyes = []
+        mask_l_eyebrow = []
+        mask_r_eyebrow = []
+        #qp s.face_mesh.FACEMESH_NUM_LANDMARKS
+        #for i in range(s.face_mesh.FACEMESH_NUM_LANDMARKS)
+        #for i in s.face_mesh.FACEMESH_NUM_LANDMARKS
+        landmarks_num = s.face_mesh.FACEMESH_NUM_LANDMARKS
+        #qp landmarks_num
+        for i in 0..landmarks_num
+          #qp s.lips
+          #qp s.lips.class
+          lips = PyCall::List.(s.lips).to_a
+          #qp lips
+          #qp lips.class
+          if lips.include? i
+            pt1 = face_landmarks.landmark[i]
+            x = int(pt1.x * s.img.shape[1])
+            y = int(pt1.y * s.img.shape[0])
+            mask_lip.append([x, y])
+          elsif PyCall::List.(s.l_eyes).to_a.include? i
+            pt1 = face_landmarks.landmark[i]
+            x = int(pt1.x * s.img.shape[1])
+            y = int(pt1.y * s.img.shape[0])
+            mask_l_eyes.append([x, y])
+          elsif PyCall::List.(s.r_eyes).to_a.include? i
+            pt1 = face_landmarks.landmark[i]
+            x = int(pt1.x * s.img.shape[1])
+            y = int(pt1.y * s.img.shape[0])
+            mask_r_eyes.append([x, y])
+          elsif PyCall::List.(s.r_eyebrow).to_a.include? i
+            pt1 = face_landmarks.landmark[i]
+            x = int(pt1.x * s.img.shape[1])
+            y = int(pt1.y * s.img.shape[0])
+            mask_r_eyebrow.append([x, y])
+          elsif PyCall::List.(s.l_eyebrow).to_a.include? i
+            pt1 = face_landmarks.landmark[i]
+            x = int(pt1.x * s.img.shape[1])
+            y = int(pt1.y * s.img.shape[0])
+            mask_l_eyebrow.append([x, y])
+          else
+            pt1 = face_landmarks.landmark[i]
+            x = int(pt1.x * s.img.shape[1])
+            y = int(pt1.y * s.img.shape[0])
+            mask_face.append([x, y])
+          end
+        end
+      end
+
+      face_dict["mask_lip"] = np.array(mask_lip)
+      face_dict["mask_face"] = np.array(mask_face)
+      face_dict["mask_l_eyes"] = np.array(mask_l_eyes)
+      face_dict["mask_r_eyes"] = np.array(mask_r_eyes)
+      face_dict["mask_l_eyebrow"] = np.array(mask_l_eyebrow)
+      face_dict["mask_r_eyebrow"] = np.array(mask_r_eyebrow)
+
+      full_mask = mask.copy()
+
+      #for part, v in face_dict.items()
+      face_dict.each {|part, v|
+        base = mask.copy()
+        qp part, v
+        #next if part == "mask_lip"
+        convexhull = cv2.convexHull(v)
+        if part == "eyes"
+          color = cfg["eyes"]["color"]
+          weight = cfg["eyes"]["weight"]
+        elsif part == "eyebrow"
+          color = cfg["eyebrow"]["color"]
+          weight = cfg["eyebrow"]["weight"]
+        elsif part == "face"
+          color = cfg["face"]["color"]
+          weight = cfg["face"]["weight"]
+        elsif part == "lip"
+          color = cfg["lip"]["color"]
+          weight = cfg["lip"]["weight"]
+        else
+          color = [0, 0, 0]
+        end
+        base = cv2.fillConvexPoly(base, convexhull, [color[2], color[1], color[0]])
+        full_mask = cv2.addWeighted(full_mask, 1, base, weight, 1)
+      }
+      full_mask = cv2.GaussianBlur(full_mask, [7, 7], 20)
+      tmp = cv2.addWeighted(s.img, 1, full_mask, 1, 1)
+
+      return tmp, full_mask
+    end
+    #logger.warning("Face not detected.")
+    return self.img, mask
   end
 end

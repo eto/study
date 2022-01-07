@@ -11,6 +11,7 @@ require "autoreload"
 require 'pycall/import'
 include PyCall::Import
 PyCall.sys.path.append(__dir__)
+require 'numpy'
 
 $LOAD_PATH << "."
 $LOAD_PATH << "../../sgl/lib"
