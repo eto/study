@@ -59,7 +59,8 @@ class MediaPipeFace
     cam.v_cam._send(frame)
 
     # マスクを表示する。
-    mask = cv2.resize(mask, dsize=(400, 320))
+    #mask = cv2.resize(mask, dsize=(400, 320))
+    mask = cv2.resize(mask, dsize=[400, 320])
     cv2.imshow("mask", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
 
     if cv2.waitKey(1) & 0xFF == ord('q')

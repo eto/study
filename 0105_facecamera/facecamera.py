@@ -72,7 +72,8 @@ class Detector():
         self.r_eyebrow = np.ravel(self.r_eyebrow)
 
 # 顔検知を行う
-    def __call__(self, image):
+#   def nu__call__(self, image):
+    def detect_faces(self, image):
         self.img = image
         self.results = self.face_detector.process(image)
 
@@ -194,7 +195,7 @@ class Camera():
         #　仮想カメラを始動する。
         self.v_cam = VirtualCamera(width=self.width, height=self.height, fps=self.fps)
 
-    def capture(self) -> None:
+    def nu_capture(self) -> None:
         logger.info("Catpuring images from video input... (press 'q' to exit.)")
         while True:
             result = self.capture_oneframe()
@@ -210,7 +211,8 @@ class Camera():
 
         frame.flags.writeable = False
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        self.detector(frame)
+        #self.detector(frame)
+        self.detector.detect_faces(frame)
 
         frame.flags.writeable = True
         frame, mask = self.detector.post_processing(self.mask, self.config.yaml_cfg)
