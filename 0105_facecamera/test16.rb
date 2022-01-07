@@ -84,15 +84,13 @@ class MediaPipeFace
         #qp s.face_mesh.FACEMESH_NUM_LANDMARKS
         #for i in range(s.face_mesh.FACEMESH_NUM_LANDMARKS)
         #for i in s.face_mesh.FACEMESH_NUM_LANDMARKS
-        landmarks_num = s.face_mesh.FACEMESH_NUM_LANDMARKS
         #qp landmarks_num
-        for i in 0..landmarks_num
+        for i in 0..s.face_mesh.FACEMESH_NUM_LANDMARKS
           #qp s.lips
           #qp s.lips.class
-          lips = PyCall::List.(s.lips).to_a
           #qp lips
           #qp lips.class
-          if lips.include? i
+          if PyCall::List.(s.lips).to_a.include? i
             pt1 = face_landmarks.landmark[i]
             x = int(pt1.x * s.img.shape[1])
             y = int(pt1.y * s.img.shape[0])
@@ -138,33 +136,35 @@ class MediaPipeFace
       #for part, v in face_dict.items()
       face_dict.each {|part, v|
         base = mask.copy()
-        qp part, v
+        #qp part
         #next if part == "mask_lip"
         convexhull = cv2.convexHull(v)
-        if part == "eyes"
+        if part == "mask_l_eyes" || part == "mask_r_eyes"
           color = cfg["eyes"]["color"]
           weight = cfg["eyes"]["weight"]
-        elsif part == "eyebrow"
+        elsif part == "mask_l_eyebrow" || part == "mask_r_eyebrow"
           color = cfg["eyebrow"]["color"]
           weight = cfg["eyebrow"]["weight"]
-        elsif part == "face"
+        elsif part == "mask_face"
           color = cfg["face"]["color"]
           weight = cfg["face"]["weight"]
-        elsif part == "lip"
+        elsif part == "mask_lip"
           color = cfg["lip"]["color"]
           weight = cfg["lip"]["weight"]
         else
           color = [0, 0, 0]
         end
         base = cv2.fillConvexPoly(base, convexhull, [color[2], color[1], color[0]])
-        full_mask = cv2.addWeighted(full_mask, 1, base, weight, 1)
+        #full_mask = cv2.addWeighted(full_mask, 1, base, weight, 1)
+        full_mask = cv2.addWeighted(full_mask, 1, base, weight*5, 1)
       }
-      full_mask = cv2.GaussianBlur(full_mask, [7, 7], 20)
+      #full_mask = cv2.GaussianBlur(full_mask, [7, 7], 20)
+      full_mask = cv2.GaussianBlur(full_mask, [39, 9], 10)
       tmp = cv2.addWeighted(s.img, 1, full_mask, 1, 1)
 
       return tmp, full_mask
     end
     #logger.warning("Face not detected.")
-    return self.img, mask
+    return s.img, mask
   end
 end
