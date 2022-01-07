@@ -163,7 +163,7 @@ class Detector():
             tmp = cv2.addWeighted(self.img, 1, full_mask, 1, 1)
 
             return tmp, full_mask
-        logger.warning("Face not detected.")
+        #logger.warning("Face not detected.")
         return self.img, mask
 
 class Camera():
@@ -194,34 +194,43 @@ class Camera():
         #　仮想カメラを始動する。
         self.v_cam = VirtualCamera(width=self.width, height=self.height, fps=self.fps)
 
+"""
     def capture(self) -> None:
         logger.info("Catpuring images from video input... (press 'q' to exit.)")
-        while True: 
-            success, frame = self.cap.read()
-            if not success:
-                print("Ignoring empty camera frame.")
-                # If loading a video, use 'break' instead of 'continue'.
-                continue
-
-            frame.flags.writeable = False
-            frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            self.detector(frame)
-
-            frame.flags.writeable = True
-            frame, mask = self.detector.post_processing(self.mask, self.config.yaml_cfg)
-            mask = cv2.flip(mask, 1)
-
-            # 結果を送信する。
-            self.v_cam._send(frame)
-
-            # マスクを表示する。
-            mask = cv2.resize(mask, dsize=(400, 320))
-            cv2.imshow("mask", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+        while True:
+            result = self.capture_oneframe()
+            if not result:
                 break
+"""
 
-# ⑥引数管理(argparse)
+    def capture_oneframe(self):
+        success, frame = self.cap.read()
+        if not success:
+            print("Ignoring empty camera frame.")
+            # If loading a video, use 'break' instead of 'continue'.
+            return true
+
+        frame.flags.writeable = False
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        self.detector(frame)
+
+        frame.flags.writeable = True
+        frame, mask = self.detector.post_processing(self.mask, self.config.yaml_cfg)
+        mask = cv2.flip(mask, 1)
+
+        # 結果を送信する。
+        self.v_cam._send(frame)
+
+        # マスクを表示する。
+        mask = cv2.resize(mask, dsize=(400, 320))
+        cv2.imshow("mask", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            return False
+
+        return True
+
+"""# ⑥引数管理(argparse)
 def arg_parser() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("yaml_file") #yamlファイルの指定
@@ -248,4 +257,5 @@ def main(yaml_file, cam_idx):
 if __name__ == "__main__":
     args = arg_parser()
     main(args.yaml_file, args.video)
+"""
 

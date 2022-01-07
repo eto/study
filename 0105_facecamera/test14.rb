@@ -18,7 +18,6 @@ class MediaPipeFace
     args = OpenStruct.new
     args.yaml_file = "config/make_up.yaml"
     args.video = 1
-    #fc.main(args.yaml_file, args.video)
     fc_main(args.yaml_file, args.video)
   end
 
@@ -26,6 +25,15 @@ class MediaPipeFace
     config = fc.Config.(yaml_file)	# Config処理
     detector = fc.Detector.()	# 検知器定義
     cam = fc.Camera.(cam_idx, config, detector)	# カメル
-    cam.capture()	# 画像を取得し、フィルターを適用する。
+    #cam.capture()	# 画像を取得し、フィルターを適用する。
+    cam_capture(cam)
+  end
+
+  def cam_capture(cam)
+    puts "Catpuring images from video input... (press 'q' to exit.)"
+    loop {
+      result = cam_capture_oneframe(cam)
+      break if ! result
+    }
   end
 end
