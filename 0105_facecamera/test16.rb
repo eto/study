@@ -33,8 +33,8 @@ class MediaPipeFace
   def cam_capture(cam)
     puts "Catpuring images from video input... (press 'q' to exit.)"
     loop {
-      result = cam.capture_oneframe
-      #result = cam_capture_oneframe(cam)
+      #result = cam.capture_oneframe
+      result = cam_capture_oneframe(cam)
       break if ! result
     }
   end
@@ -43,30 +43,25 @@ class MediaPipeFace
     success, frame = cam.cap.read()
     if ! success
       print("Ignoring empty camera frame.")
-      # If loading a video, use 'break' instead of 'continue'.
       return true
     end
 
     frame.flags.writeable = false
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    cam.detector(frame)
+    cam.detector.detect_faces(frame)
 
     frame.flags.writeable = true
     frame, mask = cam.detector.post_processing(cam.mask, cam.config.yaml_cfg)
     mask = cv2.flip(mask, 1)
 
-    # 結果を送信する。
-    cam.v_cam._send(frame)
+    cam.v_cam._send(frame)	# 結果を送信する。
 
-    # マスクを表示する。
-    #mask = cv2.resize(mask, dsize=(400, 320))
-    mask = cv2.resize(mask, dsize=[400, 320])
+    mask = cv2.resize(mask, dsize=[400, 320])	# マスクを表示する。
     cv2.imshow("mask", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
 
-    if cv2.waitKey(1) & 0xFF == ord('q')
-      return false
-    end
-
+    key = cv2.waitKey(1)
+    key &= 0xFF
+    return false if key == 113 || key == 27
     return true
   end
 end
