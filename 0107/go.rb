@@ -6,6 +6,7 @@
 require "pp"
 require "qp"
 require "ostruct"
+require "pathname"
 require "autoreload"
 
 require 'pycall/import'

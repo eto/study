@@ -2,7 +2,7 @@
 # from https://qiita.com/YomamaBanana/items/4197c4f9ec26a05416ed
 
 # ②モジュールをimportする
-import yaml
+#import yaml
 
 import sys
 import argparse
@@ -22,13 +22,6 @@ class VirtualCamera():
     def _send(self, image):
         self.v_cam.send(image)
         self.v_cam.sleep_until_next_frame()
-
-# ③Configクラス
-class Config():
-    def __init__(self, yaml_file) -> None:
-        logger.info(f"Reading config file: {yaml_file}")
-        with open(yaml_file, "r") as f:
-            self.yaml_cfg = yaml.safe_load(f)
 
 # ④検知器クラス
 # Mediapipeのインスタンス化

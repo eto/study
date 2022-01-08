@@ -3,8 +3,15 @@
 # Copyright (C) 2022 Koichiro Eto, All rights reserved.
 # License: BSD 3-Clause License
 
+require "pathname"
+require "qp"
+
 def int(n)
   n.to_i
+end
+
+def list(n)
+  n.to_a
 end
 
 class MediaPipeFace
@@ -13,8 +20,10 @@ class MediaPipeFace
 
   def main(argv)
     pyimport "facecamera", as: :fc
-    pyimport "cv2"
+    pyimport :cv2
     pyimport "numpy", as: :np
+    pyimport :yaml
+    pyimport :mediapipe, as: :mp
 
     args = OpenStruct.new
     args.yaml_file = "config/make_up.yaml"
@@ -22,16 +31,29 @@ class MediaPipeFace
     fc_main(args.yaml_file, args.video)
   end
 
+  def read_config(yaml_file)
+    #qp yaml_file
+    #logger.info(f"Reading config file: {yaml_file}")
+    puts "Reading config file: #{yaml_file}"
+    path = Pathname.new(yaml_file)
+    str = path.read
+    yaml_cfg = yaml.safe_load(str)
+    #qp yaml_cfg
+    return yaml_cfg
+  end
+
   def fc_main(yaml_file, cam_idx)
-    config = fc.Config.(yaml_file)	# Config処理
+    #config = fc.Config.(yaml_file)	# Config処理
+    config = read_config(yaml_file)	# Config処理
     detector = fc.Detector.()	# 検知器定義
+    #detector = Detector.new	# 検知器定義
     cam = fc.Camera.(cam_idx, config, detector)	# カメル
     #cam.capture()	# 画像を取得し、フィルターを適用する。
     cam_capture(cam)
   end
 
   def cam_capture(cam)
-    puts "Catpuring images from video input... (press 'q' to exit.)"
+    puts "Catpuring images from video input... (press 'q' or ESC to exit.)"
     loop {
       #result = cam.capture_oneframe
       result = cam_capture_oneframe(cam)
@@ -53,7 +75,8 @@ class MediaPipeFace
 
     frame.flags.writeable = true
     #frame, mask = cam.detector.post_processing(cam.mask, cam.config.yaml_cfg)
-    frame, mask = detector_post_processing(cam.detector, cam.mask, cam.config.yaml_cfg)
+    #frame, mask = detector_post_processing(cam.detector, cam.mask, cam.config.yaml_cfg)
+    frame, mask = detector_post_processing(cam.detector, cam.mask, cam.config)
     mask = cv2.flip(mask, 1)
 
     cam.v_cam._send(frame)	# 結果を送信する。
@@ -172,3 +195,36 @@ class MediaPipeFace
     return full_mask
   end
 end
+
+class Detector	# ④検知器クラス：Mediapipeのインスタンス化
+  def initialize(thickness=1, circle_radius=1, color=[255,0,255], min_detection_confidence=0.5, min_tracking_confidence=0.5)
+    pyimport :mediapipe, as: :mp
+
+    #logger.info("Mediapipe detector initiated.")
+    @drawing = mp.solutions.drawing_utils
+    @drawing_spec = @drawing.DrawingSpec.({thickness: thickness, circle_radius: circle_radius, color: color})
+    @drawing_styles = mp.solutions.drawing_styles
+    @face_mesh = mp.solutions.face_mesh
+    @face_detector = @face_mesh.FaceMesh.({static_image_mode: false, refine_landmarks: true,
+                                           min_detection_confidence: min_detection_confidence, min_tracking_confidence: min_tracking_confidence})
+    #qp @face_mesh.FACEMESH_LIPS
+    #qp @face_mesh.FACEMESH_LIPS.to_a
+    @lips = list(@face_mesh.FACEMESH_LIPS)
+    @lips = np.ravel(@lips)
+    @l_eyes = list(@face_mesh.FACEMESH_LEFT_EYE)
+    @l_eyes = np.ravel(@l_eyes)
+    @r_eyes = list(@face_mesh.FACEMESH_RIGHT_EYE)
+    @r_eyes = np.ravel(@r_eyes)
+    @l_eyebrow = list(@face_mesh.FACEMESH_LEFT_EYEBROW)
+    @l_eyebrow = np.ravel(@l_eyebrow)
+    @r_eyebrow = list(@face_mesh.FACEMESH_RIGHT_EYEBROW)
+    @r_eyebrow = np.ravel(@r_eyebrow)
+  end
+  def detect_faces(image)	# 顔検知を行う
+    @img = image
+    @results = @face_detector.process(image)
+  end
+end
+
+
+
