@@ -3,10 +3,6 @@
 # Copyright (C) 2022 Koichiro Eto, All rights reserved.
 # License: BSD 3-Clause License
 
-#pyimport 'facecamera'
-#PyCall.sys.path.append(__dir__)
-#fc = PyCall.import_module('facecamera')
-
 def int(n)
   n.to_i
 end
@@ -20,7 +16,6 @@ class MediaPipeFace
     pyimport "cv2"
     pyimport "numpy", as: :np
 
-    #args = fc.arg_parser()
     args = OpenStruct.new
     args.yaml_file = "config/make_up.yaml"
     args.video = 1
@@ -63,11 +58,6 @@ class MediaPipeFace
 
     cam.v_cam._send(frame)	# 結果を送信する。
 
-    #mask = cv2.resize(mask, dsize=[400, 320])	# マスクを表示する。
-    #mask = cv2.resize(mask, dsize=[1280, 720])	# マスクを表示する。
-    #mask = cv2.resize(mask, dsize=[640, 360])	# マスクを表示する。
-    #mask = cv2.resize(mask, dsize=[320, 180])	# マスクを表示する。
-    #mask = cv2.resize(mask, dsize=[160, 90])	# マスクを表示する。
     mask = cv2.resize(mask, dsize=[480, 270])	# マスクを表示する。
     cv2.imshow("mask", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
 

@@ -27,7 +27,6 @@ if ARGV[0] == "--test"
   class TestIt < Test::Unit::TestCase
     def test_it
       assert_equal(2, 1+1)
-      #it = Studies.new
     end
   end
 else
