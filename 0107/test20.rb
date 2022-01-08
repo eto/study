@@ -64,6 +64,10 @@ class MediaPipeFace
     cam.v_cam._send(frame)	# 結果を送信する。
 
     #mask = cv2.resize(mask, dsize=[400, 320])	# マスクを表示する。
+    #mask = cv2.resize(mask, dsize=[1280, 720])	# マスクを表示する。
+    #mask = cv2.resize(mask, dsize=[640, 360])	# マスクを表示する。
+    #mask = cv2.resize(mask, dsize=[320, 180])	# マスクを表示する。
+    #mask = cv2.resize(mask, dsize=[160, 90])	# マスクを表示する。
     mask = cv2.resize(mask, dsize=[480, 270])	# マスクを表示する。
     cv2.imshow("mask", cv2.cvtColor(mask, cv2.COLOR_BGR2RGB))
 
@@ -72,7 +76,7 @@ class MediaPipeFace
     return true
   end
 
-  def detector_post_processing(s, mask, cfg)	# 検知した顔に対して色と重みをつけ、後処理を行う。
+  def detector_post_processing(s, mask, cfg)
     if ! s.results.multi_face_landmarks	# 顔が認識されていなかった場合。
       #logger.warning("Face not detected.")
       return s.img, mask

@@ -16,5 +16,10 @@ task :uninstallobs do
 end
 
 task :test do
+  #sh "python3 -m venv mp_env && source mp_env/bin/activate"
+  #sh "python3 test12.py"
+  #sh "python3 face_filter.py --video 0 config/make_up.yaml"
+  #sh "python3 face_camera.py --video 0 config/make_up.yaml"
+  #sh "python3 face_camera.py --video 1 config/make_up.yaml"
   sh "ruby go.rb"
 end
