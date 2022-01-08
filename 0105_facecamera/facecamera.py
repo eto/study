@@ -78,7 +78,7 @@ class Detector():
         self.results = self.face_detector.process(image)
 
 # 検知した顔に対して色と重みをつけ、後処理を行う。
-    def post_processing(self, mask, cfg):
+    def nu_post_processing(self, mask, cfg):
         face_dict = {}
         if self.results.multi_face_landmarks:
             for face_landmarks in self.results.multi_face_landmarks:
