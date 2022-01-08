@@ -151,7 +151,8 @@ class MediaPipeFace
         full_mask = cv2.addWeighted(full_mask, 1, base, weight*5, 1)
       }
       #full_mask = cv2.GaussianBlur(full_mask, [7, 7], 20)
-      full_mask = cv2.GaussianBlur(full_mask, [39, 9], 10)
+      #full_mask = cv2.GaussianBlur(full_mask, [39, 9], 10)
+      full_mask = cv2.GaussianBlur(full_mask, [9, 9], 10)
       tmp = cv2.addWeighted(s.img, 1, full_mask, 1, 1)
 
       return tmp, full_mask
