@@ -150,10 +150,10 @@ class MediaPipeFace
     end
 
     face_dict = {}
-    face_dict["mask_lip"] = np.array(mask_lip)
     face_dict["mask_face"] = np.array(mask_face)
     face_dict["mask_l_eyes"] = np.array(mask_l_eyes)
     face_dict["mask_r_eyes"] = np.array(mask_r_eyes)
+    face_dict["mask_lip"] = np.array(mask_lip)
     face_dict["mask_l_eyebrow"] = np.array(mask_l_eyebrow)
     face_dict["mask_r_eyebrow"] = np.array(mask_r_eyebrow)
     return face_dict
@@ -162,36 +162,35 @@ class MediaPipeFace
   def detector_draw_with_face_dict(s, mask, cfg, face_dict)
     full_mask = mask.copy()
     face_dict.each {|part, v|
-      if part == "mask_l_eyes" || part == "mask_r_eyes"
-        color = cfg["eyes"]["color"]
-        weight = cfg["eyes"]["weight"]
-        full_mask = detector_draw_convex(v, mask, full_mask, color, weight)
-      elsif part == "mask_l_eyebrow" || part == "mask_r_eyebrow"
-        color = cfg["eyebrow"]["color"]
-        weight = cfg["eyebrow"]["weight"]
-        full_mask = detector_draw_convex(v, mask, full_mask, color, weight)
-      elsif part == "mask_face"
-        color = cfg["face"]["color"]
-        weight = cfg["face"]["weight"]
-        full_mask = detector_draw_convex(v, mask, full_mask, color, weight)
+      if part == "mask_face"
+        full_mask = detector_draw_convex(v, mask, full_mask, [140, 57, 0], 0.1)
+      elsif part == "mask_l_eyes"
+        full_mask = detector_draw_convex(v, mask, full_mask, [52, 124, 44], 0.15)
+      elsif part == "mask_r_eyes"
+        full_mask = detector_draw_convex(v, mask, full_mask, [52, 124, 44], 0.15)
       elsif part == "mask_lip"
-        color = cfg["lip"]["color"]
-        weight = cfg["lip"]["weight"]
-        full_mask = detector_draw_convex(v, mask, full_mask, color, weight)
+        full_mask = detector_draw_convex(v, mask, full_mask, [142, 30, 29], 0.92)
+      elsif part == "mask_l_eyebrow"
+        full_mask = detector_draw_convex(v, mask, full_mask, [200, 200, 200], 0.08)
+      elsif part == "mask_r_eyebrow"
+        full_mask = detector_draw_convex(v, mask, full_mask, [200, 200, 200], 0.08)
       else
-        color = [0, 0, 0]
-        full_mask = detector_draw_convex(v, mask, full_mask, color, weight)
+        full_mask = detector_draw_convex(v, mask, full_mask, [0, 0, 0], 0.0)	# ここには来ない
       end
     }
     return full_mask
   end
 
+  def mask_face(v, mask, full_mask, color, weight)
+    detector_draw_convex(v, mask, full_mask, color, weight)
+  end
+
   def detector_draw_convex(v, mask, full_mask, color, weight)
     base = mask.copy()
     convexhull = cv2.convexHull(v)
-    base = cv2.fillConvexPoly(base, convexhull, [color[2], color[1], color[0]])
-   #full_mask = cv2.addWeighted(full_mask, 1, base, weight, 1)
-    full_mask = cv2.addWeighted(full_mask, 1, base, weight*5, 1)
+    base = cv2.fillConvexPoly(base, convexhull, [color[0], color[1], color[2]])
+    #full_mask = cv2.addWeighted(full_mask, 1, base, weight, 1)
+    full_mask = cv2.addWeighted(full_mask, 1, base, weight*0.1, 1)
     return full_mask
   end
 end
