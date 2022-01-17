@@ -7,9 +7,17 @@ require "pathname"
 require "qp"
 
 class Main
-  def initialize
-  end
-
   def main(argv)
+    file = Pathname.new "/usr/share/dict/words"
+    outfile = Pathname.new "five-letters-words.txt"
+    outfile.open("wb") {|out|
+      file.open {|f|
+        while line = f.read
+          line.chomp!
+          next if line.length != 5
+          out.puts word
+        end
+      }
+    }
   end
 end
