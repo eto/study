@@ -10,8 +10,8 @@ class Main
   def main(argv)
     file = Pathname.new "/usr/share/dict/words"
     outfile = Pathname.new "five-letters-words.txt"
-    outfile.open("wb") {|out|
-      file.open {|f|
+    file.open {|f|
+      outfile.open("wb") {|out|
         while line = f.read
           line.chomp!
           next if line.length != 5
