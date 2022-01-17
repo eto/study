@@ -12,17 +12,33 @@ class Main
     #@outfile = Pathname.new "five-letters-words.txt"
     @outfile = Pathname.new "words.txt"
     @words = []
+    @use_characters = "ser".split(//)
+    @notuse_characters = "wtyoadl".split(//)
   end
 
   def main(argv)
     @words = get_five_letters_words(@wordsfile)
     words = []
     @words.each {|word|
-      next unless word.include?("s")
-      next unless word.include?("e")
-      next unless word.include?("r")
+      next if check_notuse_characters(word)
+      next unless check_use_characters(word)
+      words << word
     }
     output_words(words, @outfile)
+  end
+
+  def check_notuse_characters(word)
+    @notuse_characters.each {|char|
+      return true if word.include?(char)
+    }
+    return false
+  end
+
+  def check_use_characters(word)
+    @use_characters.each {|char|
+      return false unless word.include?(char)
+    }
+    return true
   end
 
   def get_five_letters_words(wordsfile)
