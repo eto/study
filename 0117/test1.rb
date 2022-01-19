@@ -9,7 +9,8 @@ require "pathname"
 require "qp"
 
 #MATCH_CHARACTERS = "S*IRE"
-MATCH_CHARACTERS = "*O***"
+#MATCH_CHARACTERS = "*O***"
+MATCH_CHARACTERS = "*o***"
 #USE_CHARACTERS = "serh"
 USE_CHARACTERS = "no"
 #NOTUSE_CHARACTERS = "wtyoadl"
@@ -22,15 +23,18 @@ class Main
     @wordsfile = Pathname.new "/usr/share/dict/words"
     @outfile = Pathname.new "words.txt"
     @words = []
+    @match_characters = MATCH_CHARACTERS.split(//)
     @use_characters = USE_CHARACTERS.split(//)
     @notuse_characters = NOTUSE_CHARACTERS.split(//)
     @notuse_places = NOTUSE_PLACES.split(/ /)
-    @words = get_five_letters_words(@wordsfile)
+    @allwords = get_five_letters_words(@wordsfile)
   end
 
   def main(argv)
     words = []
-    @words.each {|word|
+    @allwords.each {|word|
+      next unless check_match_characters(word)
+      #qp word
       next if check_notuse_characters(word)
       next unless check_use_characters(word)
       if check_notuse_places(word)
@@ -41,6 +45,19 @@ class Main
       end
     }
     output_words(words, @outfile)
+    words_with_freq = calculate_words(words)
+    outfile = Pathname.new "words_with_freq2.txt"
+    output_words_with_frequency(words_with_freq, outfile)
+  end
+
+  def check_match_characters(word)
+    @match_characters.each_with_index {|char, index|
+      next if char == "*"	# unknown
+      wordchar = word[index]
+      #qp char, index, wordchar
+      return false if char != wordchar
+    }
+    return true
   end
 
   def check_notuse_characters(word)
@@ -89,33 +106,40 @@ class Main
   end
 
   def calculate_frequent_words	# 頻出単語を計算する
-    @freq = calculate_all_frequency
+    words_with_freq = calculate_words(@allwords)
+    outfile = Pathname.new "words_with_freq.txt"
+    output_words_with_frequency(words_with_freq, outfile)
+  end
+
+  def output_words_with_frequency(words_with_freq, outfile)
+    outfile.open("wb") {|out|
+      words_with_freq.each {|freq_of_the_word, word|
+        out.printf("%0.1f	#{word}\n", freq_of_the_word*100.0)
+      }
+    }
+  end
+
+  def calculate_words(words)
+    freq = calculate_all_frequency(words)
     words_with_freq = []
-    @words.each {|word|
+    words.each {|word|
       chars = word.split(//)
       freq_of_the_word = 0.0
       chars.each_with_index {|char, index|
-        f = @freq[index][char]
+        f = freq[index][char]
         freq_of_the_word += f
       }
       #qp word, freq_of_the_word
       words_with_freq << [freq_of_the_word, word]
     }
     words_with_freq = words_with_freq.sort.reverse
-    #qp words_with_freq
-    outfile = Pathname.new "words_with_freq.txt"
-    outfile.open("wb") {|out|
-      words_with_freq.each {|freq_of_the_word, word|
-        #out.puts "#{freq_of_the_word}	#{word}"
-        out.printf("%0.1f	#{word}\n", freq_of_the_word*100.0)
-      }
-    }
+    return words_with_freq
   end
 
-  def calculate_all_frequency
+  def calculate_all_frequency(words)
     freq = []
     #qp @words.length
-    @words.each {|word|
+    words.each {|word|
       chars = word.split(//)
       #qp chars
       chars.each_with_index {|char, index|
@@ -129,7 +153,7 @@ class Main
       #qp index, columns
       columns.each {|char, num|
         #qp column
-        columns[char] = columns[char].to_f / @words.length.to_f
+        columns[char] = columns[char].to_f / words.length.to_f
         #print "#{index}_#{char}_#{columns[char]};"
         #printf("#{index}_#{char}_%0.1f;", columns[char]*100.0)
         #ruby print 桁

@@ -22,5 +22,5 @@ if ARGV[0] == "--test"
   end
 else
   Main.new.main(ARGV)
-  Main.new.calculate_frequent_words
+  #Main.new.calculate_frequent_words
 end
