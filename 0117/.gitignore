@@ -6,4 +6,4 @@ take*.jpg
 __pycache__
 #*#
 .#*
-*.txt
+#*.txt

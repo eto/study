@@ -100,7 +100,8 @@ class Main
     outfile = Pathname.new "words_with_freq.txt"
     outfile.open("wb") {|out|
       words_with_freq.each {|freq_of_the_word, word|
-        out.puts "#{freq_of_the_word}	#{word}"
+        #out.puts "#{freq_of_the_word}	#{word}"
+        out.printf("%0.1f	#{word}\n", freq_of_the_word*100.0)
       }
     }
   end
@@ -129,7 +130,7 @@ class Main
         #column.each {|char, num|
         #}
       }
-      puts
+      #puts
     }
     return freq
   end
