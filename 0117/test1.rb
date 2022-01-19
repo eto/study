@@ -83,5 +83,54 @@ class Main
   end
 
   def calculate_frequent_words	# 頻出単語を計算する
+    @freq = calculate_all_frequency
+    words_with_freq = []
+    @words.each {|word|
+      chars = word.split(//)
+      freq_of_the_word = 0.0
+      chars.each_with_index {|char, index|
+        f = @freq[index][char]
+        freq_of_the_word += f
+      }
+      #qp word, freq_of_the_word
+      words_with_freq << [freq_of_the_word, word]
+    }
+    words_with_freq = words_with_freq.sort.reverse
+    #qp words_with_freq
+    outfile = Pathname.new "words_with_freq.txt"
+    outfile.open("wb") {|out|
+      words_with_freq.each {|freq_of_the_word, word|
+        out.puts "#{freq_of_the_word}	#{word}"
+      }
+    }
+  end
+
+  def calculate_all_frequency
+    freq = []
+    #qp @words.length
+    @words.each {|word|
+      chars = word.split(//)
+      #qp chars
+      chars.each_with_index {|char, index|
+        freq[index] = {} if freq[index].nil?
+        freq[index][char] = 0 if freq[index][char].nil?
+        freq[index][char] += 1
+      }
+    }
+    #qp freq
+    freq.each_with_index {|columns, index|
+      #qp index, columns
+      columns.each {|char, num|
+        #qp column
+        columns[char] = columns[char].to_f / @words.length.to_f
+        #print "#{index}_#{char}_#{columns[char]};"
+        #printf("#{index}_#{char}_%0.1f;", columns[char]*100.0)
+        #ruby print 桁
+        #column.each {|char, num|
+        #}
+      }
+      puts
+    }
+    return freq
   end
 end
