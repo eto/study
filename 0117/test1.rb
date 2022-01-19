@@ -3,13 +3,19 @@
 # Copyright (C) 2022 Koichiro Eto, All rights reserved.
 # License: BSD 3-Clause License
 
+# for https://www.powerlanguage.co.uk/wordle/
+
 require "pathname"
 require "qp"
 
-MATCH_CHARACTERS = "S*IRE"
-USE_CHARACTERS = "serh"
-NOTUSE_CHARACTERS = "wtyoadl"
-NOTUSE_PLACES = "r e rse es rh"
+#MATCH_CHARACTERS = "S*IRE"
+MATCH_CHARACTERS = "*O***"
+#USE_CHARACTERS = "serh"
+USE_CHARACTERS = "no"
+#NOTUSE_CHARACTERS = "wtyoadl"
+NOTUSE_CHARACTERS = "eym"
+#NOTUSE_PLACES = "r e rse es rh"
+NOTUSE_PLACES = "m _ _ e y"
 
 class Main
   def initialize
