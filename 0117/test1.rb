@@ -11,12 +11,15 @@ require "qp"
 #MATCH_CHARACTERS = "S*IRE"
 #MATCH_CHARACTERS = "*O***"
 MATCH_CHARACTERS = "*o***"
+#UNMATCH_CHARACTERS = "**n**"
 #USE_CHARACTERS = "serh"
-USE_CHARACTERS = "no"
+#USE_CHARACTERS = "no"
+USE_CHARACTERS = "ton"
 #NOTUSE_CHARACTERS = "wtyoadl"
-NOTUSE_CHARACTERS = "eym"
+#NOTUSE_CHARACTERS = "eym"
+NOTUSE_CHARACTERS = "aerym"
 #NOTUSE_PLACES = "r e rse es rh"
-NOTUSE_PLACES = "m _ _ e y"
+NOTUSE_PLACES = "mt _ nr ea yn"
 
 class Main
   def initialize
