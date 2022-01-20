@@ -1,7 +1,1 @@
-328.6	noint
-300.0	point
-300.0	joint
-285.7	fount
-285.7	count
-200.0	notus
-200.0	notch
+500.0	robot

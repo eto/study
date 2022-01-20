@@ -2060,7 +2060,6 @@ copse
 copsy
 copus
 coque
-corah
 coral
 coram
 cordy
@@ -2079,7 +2078,6 @@ coroa
 corol
 corps
 corse
-corta
 coryl
 cosec
 coset
@@ -6665,7 +6663,6 @@ pored
 porer
 porge
 porgy
-poria
 porky
 poros
 porry

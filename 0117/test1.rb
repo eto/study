@@ -8,29 +8,22 @@
 require "pathname"
 require "qp"
 
-#MATCH_CHARACTERS = "S*IRE"
-#MATCH_CHARACTERS = "*O***"
 MATCH_CHARACTERS = "*o***"
-#UNMATCH_CHARACTERS = "**n**"
-#USE_CHARACTERS = "serh"
-#USE_CHARACTERS = "no"
-USE_CHARACTERS = "ton"
-#NOTUSE_CHARACTERS = "wtyoadl"
-#NOTUSE_CHARACTERS = "eym"
-NOTUSE_CHARACTERS = "aerym"
-#NOTUSE_PLACES = "r e rse es rh"
-NOTUSE_PLACES = "mt _ nr ea yn"
+USE_CHARACTERS = "orb"
+NOTUSE_CHARACTERS = "eynmcalugh"
+NOTUSE_PLACES = "mcb _ nru eag ylh"
 
 class Main
   def initialize
-    @wordsfile = Pathname.new "/usr/share/dict/words"
+    #@wordsfile = Pathname.new "/usr/share/dict/words"
     @outfile = Pathname.new "words.txt"
     @words = []
     @match_characters = MATCH_CHARACTERS.split(//)
     @use_characters = USE_CHARACTERS.split(//)
     @notuse_characters = NOTUSE_CHARACTERS.split(//)
     @notuse_places = NOTUSE_PLACES.split(/ /)
-    @allwords = get_five_letters_words(@wordsfile)
+    #@allwords = get_five_letters_words(@wordsfile)
+    @allwords = get_five_letters_words
   end
 
   def main(argv)
@@ -86,7 +79,17 @@ class Main
     return true
   end
 
-  def get_five_letters_words(wordsfile)
+  def get_five_letters_words
+    wordsfile = Pathname.new "five-letters-words.txt"
+    str = wordsfile.open {|f| f.read }
+    words = []
+    str.each_line {|line|
+      words << line.chomp
+    }
+    return words
+  end
+
+  def get_five_letters_words_from_unix(wordsfile)
     str = wordsfile.open {|f| f.read }
     words = []
     str.each_line {|line|
