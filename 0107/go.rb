@@ -19,7 +19,7 @@ $LOAD_PATH << "../../sgl/lib"
 #require 'sgl'
 
 autoreload(:interval=>1, :verbose=>true, :reprime=>true) {
-  require "test20"
+  require "test22"
 }
 
 if ARGV[0] == "--test"
