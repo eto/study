@@ -192,9 +192,15 @@ class MediaPipeFace
     #qp convexhull.to_a.length
 
     @mask_index = 0 if @mask_index.nil?
+#    if convexhull.length < @mask_index
+#      #qp convexhull.length, @mask_index
+#      return
+#    end
+    return if convexhull[@mask_index].nil?
     p0 = convexhull[@mask_index].to_a[0]
     @mask_index += 1
     @mask_index = 0 if (convexhull.to_a.length - 1) <= @mask_index
+    return if convexhull[@mask_index].nil?
     p1 = convexhull[@mask_index].to_a[0]
     #qp p0, p1
     #p1 = [convexhull[0][0], convexhull[0][1]]
